@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>665</width>
-    <height>704</height>
+    <height>732</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,14 +19,14 @@
      <x>10</x>
      <y>20</y>
      <width>631</width>
-     <height>671</height>
+     <height>691</height>
     </rect>
    </property>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>600</y>
+      <y>610</y>
       <width>561</width>
       <height>16</height>
      </rect>
@@ -52,7 +52,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>620</y>
+      <y>630</y>
       <width>567</width>
       <height>27</height>
      </rect>
@@ -95,8 +95,8 @@
     <property name="geometry">
      <rect>
       <x>31</x>
-      <y>260</y>
-      <width>248</width>
+      <y>270</y>
+      <width>261</width>
       <height>112</height>
      </rect>
     </property>
@@ -163,85 +163,6 @@
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Обновить</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>50</y>
-      <width>233</width>
-      <height>195</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="0" colspan="2">
-      <widget class="QCheckBox" name="checkBox">
-       <property name="text">
-        <string>Получение IP автоматически</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLineEdit" name="editIP"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="labelIP">
-       <property name="text">
-        <string>IP</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLineEdit" name="editNetmask"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLabel" name="labelNetmask">
-       <property name="text">
-        <string>Netmask</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLineEdit" name="editDHCP"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="labelDHCP">
-       <property name="text">
-        <string>DHCP</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLineEdit" name="editDNS"/>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLabel" name="labelDNS">
-       <property name="text">
-        <string>DNS</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="labelEth">
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ethernet :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0" colspan="2">
-      <widget class="QLabel" name="labelSettEth">
-       <property name="lineWidth">
-        <number>1</number>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>
@@ -318,7 +239,7 @@
     <property name="geometry">
      <rect>
       <x>33</x>
-      <y>390</y>
+      <y>400</y>
       <width>262</width>
       <height>205</height>
      </rect>
@@ -428,87 +349,193 @@
      <rect>
       <x>340</x>
       <y>260</y>
-      <width>261</width>
-      <height>203</height>
+      <width>263</width>
+      <height>211</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
+    <layout class="QGridLayout" name="gridLayout_6">
      <item row="0" column="0">
-      <widget class="QLabel" name="labelConnection">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="5" column="2">
+        <widget class="QLabel" name="labelLog2">
+         <property name="text">
+          <string>Логин</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLabel" name="labelPass2">
+         <property name="text">
+          <string>Пароль</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QLineEdit" name="editPass2">
+         <property name="echoMode">
+          <enum>QLineEdit::PasswordEchoOnEdit</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelConnection">
+         <property name="text">
+          <string>Подключение :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLineEdit" name="editAdrRDP"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboBox_2">
+         <item>
+          <property name="text">
+           <string>RDP</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Web</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLabel" name="labelAdrRDP">
+         <property name="text">
+          <string>Адрес RDP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLineEdit" name="editLog2"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Адрес Web</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="3">
+        <widget class="QCheckBox" name="checkBox_5">
+         <property name="text">
+          <string>Проброс USB по RDP</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelSettRDP">
        <property name="text">
-        <string>Подключение :</string>
+        <string/>
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QLineEdit" name="lineEdit_3"/>
-     </item>
-     <item row="3" column="2">
-      <widget class="QLabel" name="labelAdrRDP">
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>51</y>
+      <width>261</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0,0,0,0,0,0">
+     <item row="5" column="4">
+      <widget class="QLabel" name="labelDNS">
        <property name="text">
-        <string>Адрес RDP</string>
+        <string>DNS</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QLineEdit" name="editLog2"/>
-     </item>
-     <item row="6" column="0" colspan="3">
-      <widget class="QCheckBox" name="checkBox_5">
+     <item row="0" column="2" colspan="2">
+      <widget class="QCheckBox" name="checkBox_3">
        <property name="text">
-        <string>Проброс USB по RDP</string>
+        <string>VLAN</string>
+       </property>
+       <property name="tristate">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_6">
+     <item row="3" column="0" colspan="4">
+      <widget class="QLineEdit" name="editNetmask"/>
+     </item>
+     <item row="4" column="0" colspan="4">
+      <widget class="QLineEdit" name="editDHCP"/>
+     </item>
+     <item row="6" column="0" colspan="5">
+      <widget class="QLabel" name="labelSettEth">
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
        <property name="text">
-        <string>Адрес Web</string>
+        <string/>
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="2">
-      <widget class="QLineEdit" name="editAdrRDP"/>
-     </item>
-     <item row="4" column="2">
-      <widget class="QLabel" name="labelLog2">
+     <item row="4" column="4">
+      <widget class="QLabel" name="labelDHCP">
        <property name="text">
-        <string>Логин</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0" colspan="2">
-      <widget class="QLineEdit" name="editPass2">
-       <property name="echoMode">
-        <enum>QLineEdit::PasswordEchoOnEdit</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QLabel" name="labelPass2">
-       <property name="text">
-        <string>Пароль</string>
+        <string>Gateway</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox_2">
-       <item>
-        <property name="text">
-         <string>RDP</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Web</string>
-        </property>
-       </item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>38</width>
+         <height>14</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="labelNetmask">
+       <property name="text">
+        <string>Netmask</string>
+       </property>
       </widget>
      </item>
-     <item row="7" column="0" colspan="3">
-      <widget class="QLabel" name="labelSettRDP">
+     <item row="2" column="0" colspan="4">
+      <widget class="QLineEdit" name="editIP"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelEth">
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
        <property name="text">
-        <string/>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ethernet :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="4">
+      <widget class="QLineEdit" name="editDNS"/>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="labelIP">
+       <property name="text">
+        <string>IP</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="5">
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string>Получение IP автоматически</string>
        </property>
       </widget>
      </item>

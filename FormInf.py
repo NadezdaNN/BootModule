@@ -1,11 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore    import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui     import *
-from PyQt5 import QtCore
-#from PyQt5 import QtGui
-from FormLogo import *
-
+from os import system
 
 class FormInf(QtWidgets.QWidget):  
 
@@ -16,22 +10,20 @@ class FormInf(QtWidgets.QWidget):
         
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         #self.setWindowTitle('Информация об устройстве')
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        cx = FormLogo.CX_global
-        cy = FormLogo.CY_global
-        #self.resize(300,150)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)        
+        cx = QtWidgets.QApplication.desktop().width()
+        cy = QtWidgets.QApplication.desktop().height()
+        
         self.resize(240,115)
-        self.move(int(cx/2-self.width()/2),int(cy/2-self.height()/2))
-        
-        """qtRectangle = self.frameGeometry()
-        print(qtRectangle)
-        centerPoint = QDesktopWidget().availableGeometry().center()        
-        qtRectangle.moveCenter(centerPoint)
-        self.move(qtRectangle.center())"""
-                  
-        with open('deviceInf.txt', 'r+') as file: # не создается, если нет
-            lines = file.readlines()
-        
+        self.move(int(cx/2-self.width()/2),int(cy/2-self.height()/2))  
+
+        try:
+            file = open('deviceInf.txt', 'r+')
+        except: 
+            system("sudo touch deviceInf.txt")
+            file = open('deviceInf.txt', 'r+')     
+        lines = file.readlines()                  
+                
         label = QtWidgets.QLabel()
         for i in lines:
             label.setText("".join(lines)) # Выйти без сохранения настроек?
@@ -39,15 +31,12 @@ class FormInf(QtWidgets.QWidget):
         label.setWordWrap(True)
 
         buttonYes = QtWidgets.QPushButton("OK")        
-        hSpacer = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)         # QtWidgets.QSizePolicy.Minimum    
-        #self.gridLayout.addItem(hSpacer, 0, 1, 1, 1) 
-        # hPolicy: QSizePolicy.Policy = QSizePolicy.Minimum, vPolicy: QSizePolicy.Policy = QSizePolicy.Minimum
+        hSpacer = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)           
+        
+        buttonYes.setAutoDefault(True)            
 
-        buttonYes.setAutoDefault(True)
-        #buttonNo.setAutoDefault(True)         
-
-        self.grid = QGridLayout(self)        
-        self.grid.setAlignment(Qt.AlignCenter)
+        self.grid = QtWidgets.QGridLayout(self)        
+        self.grid.setAlignment(QtCore.Qt.AlignCenter)
         self.grid.addWidget(label,0,0,1,2)
         self.grid.addItem(hSpacer,1,0)
         self.grid.addWidget(buttonYes,1,1)

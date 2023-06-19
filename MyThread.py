@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
-import os
 
 class MyThread(QtCore.QThread):
+    
     currentValue = QtCore.pyqtSignal(int)
     finished = QtCore.pyqtSignal()
     

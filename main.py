@@ -1,36 +1,37 @@
 #!/usr/bin/python3
 
-import sys
-from PyQt5 import QtWidgets
-from FormLogo import *
-from FormLogPass import *
-from FormSettings import *
-from FormWarning import *
-from FormInf import *
-from FormDelSettings import*
+from sys import argv, exit
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt
+import FormLogo
+import FormLogPass
+import FormSettings
+import FormWarning
+import FormInf
+import FormDelSettings
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(argv)
         
-    formLogo = FormLogo(5)    
-    formLogPass = FormLogPass()
-    formSettings = FormSettings()      
-    formWarning = FormWarning()    
-    formInf = FormInf() 
-    formDelSettings = FormDelSettings()
+    formLogo = FormLogo.FormLogo(5)    
+    formLogPass = FormLogPass.FormLogPass()
+    formSettings = FormSettings.FormSettings()      
+    formWarning = FormWarning.FormWarning()    
+    formInf = FormInf.FormInf() 
+    formDelSettings = FormDelSettings.FormDelSettings()
            
-    formLogo.signalShow.connect(formLogPass.showForm2, QtCore.Qt.QueuedConnection)
-    formLogPass.signalShow.connect(formLogo.showForm1, QtCore.Qt.QueuedConnection)
-    formLogPass.signalShowSettings.connect(formSettings.showForm3, QtCore.Qt.QueuedConnection)
-    formLogPass.signalShowDel.connect(formDelSettings.showForm4, QtCore.Qt.DirectConnection)
-    formSettings.signalShow.connect(formLogo.showForm1, QtCore.Qt.QueuedConnection)    
-    formSettings.signalShowWarning.connect(formWarning.showForm, QtCore.Qt.QueuedConnection)
-    formWarning.signalHide.connect(formSettings.Exit_2_clicked, QtCore.Qt.QueuedConnection)
-    formWarning.signalShow.connect(formSettings.showForm3, QtCore.Qt.QueuedConnection)
-    formSettings.signalShowInf.connect(formInf.showForm, QtCore.Qt.QueuedConnection)
-    formInf.signalShow.connect(formSettings.showForm3, QtCore.Qt.QueuedConnection)
-    formDelSettings.signalHide.connect(formLogPass.showForm2, QtCore.Qt.QueuedConnection)
-    formDelSettings.signalDelSettings.connect(formSettings.slotDelSett, QtCore.Qt.QueuedConnection)
+    formLogo.signalShow.connect(formLogPass.showForm, Qt.QueuedConnection)
+    formLogPass.signalShow.connect(formLogo.showForm, Qt.QueuedConnection)
+    formLogPass.signalShowSettings.connect(formSettings.showForm, Qt.QueuedConnection)
+    formLogPass.signalShowDel.connect(formDelSettings.showForm, Qt.DirectConnection)
+    formSettings.signalShow.connect(formLogo.showForm, Qt.QueuedConnection)    
+    formSettings.signalShowWarning.connect(formWarning.showForm, Qt.QueuedConnection)
+    formWarning.signalHide.connect(formSettings.Exit_2_clicked, Qt.QueuedConnection)
+    formWarning.signalShow.connect(formSettings.showForm, Qt.QueuedConnection)
+    formSettings.signalShowInf.connect(formInf.showForm, Qt.QueuedConnection)
+    formInf.signalShow.connect(formSettings.showForm, Qt.QueuedConnection)
+    formDelSettings.signalHide.connect(formLogPass.showForm, Qt.QueuedConnection)
+    formDelSettings.signalDelSettings.connect(formSettings.slotDelSett, Qt.QueuedConnection)
     
     formLogo.showFullScreen()      
-    sys.exit(app.exec_())    
+    exit(app.exec_())    

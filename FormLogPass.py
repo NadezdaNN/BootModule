@@ -1,10 +1,8 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtCore    import *
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
+from PyQt5 import QtWidgets, QtCore
 from time import sleep
 from qtwidgets import PasswordEdit
 from keyboard import is_pressed 
+
 
 class FormLogPass(QtWidgets.QWidget):   
     
@@ -15,21 +13,21 @@ class FormLogPass(QtWidgets.QWidget):
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)    
         
-        cx = QApplication.desktop().width()
-        cy = QApplication.desktop().height()
+        cx = QtWidgets.QApplication.desktop().width()
+        cy = QtWidgets.QApplication.desktop().height()
         self.setGeometry(0, 0, cx, cy)                
 
-        self.labelPassword = QLabel('Пароль администратора: ')        
-        self.passwordEdit = PasswordEdit(self)        
-        self.labelWrongPass = QLabel('')        
-        self.buttonExit = QPushButton("Выход")
-        self.buttonOK = QPushButton("OK")
+        self.labelPassword = QtWidgets.QLabel('Пароль администратора: ')        
+        self.passwordEdit = PasswordEdit()        
+        self.labelWrongPass = QtWidgets.QLabel('')        
+        self.buttonExit = QtWidgets.QPushButton("Выход")
+        self.buttonOK = QtWidgets.QPushButton("OK")
         
         self.buttonOK.setAutoDefault(True)
         self.buttonExit.setAutoDefault(True)
                 
-        self.grid = QGridLayout(self)        
-        self.grid.setAlignment(Qt.AlignCenter)
+        self.grid = QtWidgets.QGridLayout(self)        
+        self.grid.setAlignment(QtCore.Qt.AlignCenter)
         
         self.grid.addWidget(self.labelPassword, 1, 1)
         self.grid.addWidget(self.passwordEdit, 1, 2, 1, 2)           
@@ -42,7 +40,8 @@ class FormLogPass(QtWidgets.QWidget):
         self.buttonExit.clicked.connect(self.buttonExit_clicked)
         self.buttonOK.clicked.connect(self.buttonOK_clicked) 
         
-    def showForm2(self):        
+        
+    def showForm(self):        
         self.passwordEdit.setText('') 
         self.labelWrongPass.setText('')  
         self.setStyleSheet("background-color: rgb(240, 240, 240)") 
@@ -54,17 +53,17 @@ class FormLogPass(QtWidgets.QWidget):
         
 
     def keyPressEvent(self, e):
-        if e.key() == Qt.Key_Escape:
+        if e.key() == QtCore.Qt.Key_Escape:
             self.buttonExit_clicked()
             
-        if e.key() == Qt.Key_Enter or e.key() == Qt.Key_Return:
+        if e.key() == QtCore.Qt.Key_Enter or e.key() == QtCore.Qt.Key_Return:
             self.buttonOK_clicked()
         
         num=0        
-        while is_pressed('F10') and num<5:            
+        while is_pressed('F10') and num<5 :            
             sleep(1)
-            num+=1                     
-        if num>=5:               
+            num += 1                     
+        if num >= 5:               
             self.signalShowDel.emit()
             self.setStyleSheet("background-color: lightgray") 
             self.buttonOK.setStyleSheet("background-color: lightgray") 
@@ -81,6 +80,7 @@ class FormLogPass(QtWidgets.QWidget):
     def buttonOK_clicked(self):
         password = open('password.py').read()
         password = password.rstrip('\n')
+        
         if self.passwordEdit.text() == password:                 
             self.setVisible(False)
             self.signalShowSettings.emit()
