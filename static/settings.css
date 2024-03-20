@@ -1,0 +1,355 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container {
+    width: 33%;
+    height: 66%;
+    top: 17%;
+    left: 30%;
+    position: absolute;
+    justify-content: center;
+    align-content: center;
+    display: grid;
+    
+    grid-template-columns: 1fr 1fr;    
+    grid-template-rows: 1fr 7fr 7fr 1fr 1fr; 
+
+    /*border: 2px solid rgb(80, 145, 27); /* Обводим зелёной линией */
+    /*border-radius: 5px; /* Скругляем углы на 5 пикселей */
+    /*border: 1px dashed; /* Обводим чёрным пунктиром */
+    /*border-radius: 10px; /* Скругляем углы на 10 пикселей */
+    /*background-color: rgba(82, 29, 179, 0.5); /* Фон красим фиолетовым */
+    /*text-align: center; /* Контент размещаем в центре по горизонтали */
+    column-gap: 5%;
+    row-gap: 5%;
+}
+
+.A {
+    grid-area: 1 / 1 / 2 / 3;
+    justify-self: center; /* выравнивает грид-элементы по горизонтали */
+    align-self: center; /*выравнивает грид-элементы по вертикали*/    
+    font-weight: bold;
+}
+
+.B {
+    grid-area: 2 / 1 / 3 / 2;     
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;  
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);     
+    /*border: 2px solid rgb(10, 10, 10); /* Обводим зелёной линией */
+    /*background-color: rgba(82, 29, 179, 0.5); /* Фон красим фиолетовым */
+    column-gap: 2%;
+    row-gap: 1%;
+}
+.B_1 { /*Ethernet*/
+    grid-area: 1 / 1 / 2 / 2;
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start; /*выравнивает грид-элементы по вертикали*/    
+}
+.B_2 { /*VLAN_check*/
+    grid-area: 1 / 2 / 2 / 3;
+    justify-self: end;
+    align-self: start; /*выравнивает грид-элементы по вертикали*/     
+}
+.B_3 { /*VLAN_input*/
+    grid-area: 1 / 3 / 2 / 4;
+    justify-self: start;
+    align-self: start;
+}
+.B_4 { /*checkbox*/
+    grid-area: 2 / 1 / 3 / 4;
+    justify-self: start;
+    align-self: start;    
+}
+.B_5 { /*ip_input*/
+    grid-area: 3 / 1 / 4 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.B_6 { /*ip_text*/
+    grid-area: 3 / 3 / 4 / 4;
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;
+    /*opacity: 0.4;*/
+}
+.B_7 { /*netmask_input*/
+    grid-area: 4 / 1 / 5 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.B_8 { /*netmask*/
+    grid-area: 4 / 3 / 5 / 4;    
+    justify-self: start;
+    align-self: start;
+    /*opacity: 0.4;*/
+}
+.B_9 { /*gateway_input*/
+    grid-area: 5 / 1 / 6 / 3;
+    justify-self: start;
+    align-self: start;    
+}
+.B_10 { /*gateway*/
+    grid-area: 5 / 3 / 6 / 4;
+    justify-self: start;
+    align-self: start;
+    /*opacity: 0.4;*/
+}
+.B_11 { /*dns_input*/
+    grid-area: 6 / 1 / 7 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.B_12 { /*dns*/
+    grid-area: 6 / 3 / 7 / 4;
+    justify-self: start;
+    align-self: start; 
+    /*opacity: 0.4;*/    
+}
+.B_13 { 
+    grid-area: 7 / 1 / 8 / 3;
+    justify-self: start;
+    align-self: start;
+    opacity: 0.5;
+}
+
+
+.C {
+    grid-area: 2 / 2 / 3 / 3;    
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;      
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(7, 1fr);  
+    column-gap: 2%;
+    row-gap: 1%;    
+}
+.С_1 {
+    grid-area: 1 / 1 / 2 / 2;    
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;    
+}
+.С_2 {
+    grid-area: 2 / 1 / 3 / 2;    
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start; 
+}
+.С_3 {
+    grid-area: 3 / 1 / 4 / 2;  
+    justify-self: stretch; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;  
+}
+/*.С_4 {
+    grid-area: 4 / 1 / 5 / 2;
+    justify-self: start; 
+    align-self: start;  
+}*/
+.С_5 {
+    grid-area: 4 / 1 / 5 / 2; /*5 / 1 / 6 / 2;*/
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;  
+}
+.С_6 {
+    grid-area: 5 / 1 / 6 / 2; /*6 / 1 / 7 / 2; */   
+    justify-self: start;
+    align-self: start;    
+}
+
+.D {
+    grid-area: 3 / 1 / 4 / 2;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;  
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr); 
+    /*background-color: rgba(82, 29, 179, 0.5); /* Фон красим фиолетовым */
+    /*justify-self: center; /* выравнивает грид-элементы по горизонтали */
+    /*align-self: start;*/
+    /*text-align: center; /* Контент размещаем в центре по горизонтали */
+    column-gap: 2%;
+    row-gap: 1%;   
+}
+.D_1 {
+    grid-area: 1 / 1 / 2 / 2;     
+    justify-self: start;
+    align-self: start;
+}
+.D_2 {
+    grid-area: 1 / 2 / 2 / 3; 
+    justify-self: end;
+    align-self: start;
+}
+.D_3 {
+    grid-area: 2 / 1 / 3 / 3;
+    justify-self: start;
+    align-self: start;
+    }
+.D_4 {
+    grid-area: 2 / 3 / 3 / 4;    
+    justify-self: start;
+    align-self: start;
+}
+.D_5 {
+    grid-area: 3 / 1 / 4 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.D_6 {
+    grid-area: 3 / 3 / 4 / 4;
+    justify-self: start;
+    align-self: start;
+}
+.D_7 {
+    grid-area: 4 / 1 / 5 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.D_8 {
+    grid-area: 4 / 3 / 5 / 4;   
+    justify-self: start;
+    align-self: start; 
+}
+.D_9 {
+    grid-area: 5 / 1 / 6 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.D_10 {
+    grid-area: 5 / 3 / 6 / 4;
+    justify-self: start;
+    align-self: start;
+}
+.D_11 {
+    grid-area: 6 / 1 / 7 / 3;
+    justify-self: end;
+    align-self: start;
+}
+.D_12 {
+    grid-area: 6 / 3 / 7 / 4;    
+    justify-self: end;
+    align-self: start;
+}
+.D_13 {
+    grid-area: 7 / 1 / 8 / 4;    
+    justify-self: start;
+    align-self: start;
+    opacity: 0.5;
+}
+
+.E {
+    grid-area: 3 / 2 / 4 / 3;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;  
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr); 
+    column-gap: 2%;
+    row-gap: 1%; 
+}
+.E_1 {
+    grid-area: 1 / 1 / 2 / 2; 
+    justify-self: start;
+    align-self: start;
+}
+.E_2 {
+    grid-area: 1 / 2 / 2 / 3; 
+    justify-self: start;
+    align-self: start;
+}
+.E_3 {
+    grid-area: 2 / 1 / 3 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.E_4 {
+    grid-area: 2 / 3 / 3 / 4;  
+    justify-self: start;
+    align-self: start;  
+}
+.E_5 {
+    grid-area: 3 / 1 / 4 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.E_6 {grid-area: 3 / 3 / 4 / 4;
+    justify-self: start;
+    align-self: start;  
+}
+.E_7 {
+    grid-area: 4 / 1 / 5 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.E_8 {
+    grid-area: 4 / 3 / 5 / 4;
+    justify-self: start;
+    align-self: start;    
+}
+.E_9 {
+    grid-area: 5 / 1 / 6 / 3;
+    justify-self: start;
+    align-self: start;
+}
+.E_10 {
+    grid-area: 5 / 3 / 6 / 4;
+    justify-self: start;
+    align-self: start;
+}
+.E_11 {
+    grid-area: 6 / 1 / 7 / 4;
+    justify-self: start;
+    align-self: start;
+}
+.E_12 {
+    grid-area: 7 / 1 / 8 / 4;
+    justify-self: start;
+    align-self: start;
+    opacity: 0.5;
+}
+
+.F0 {
+    grid-area: 4 / 1 / 5 / 3;    
+}
+.F {
+    grid-area: 5 / 1 / 6 / 3;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;  
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(1, 1fr); 
+    column-gap: 5%;
+    row-gap: 5%;  
+}
+.F_1 {grid-area: 1 / 1 / 2 / 2; 
+    justify-self: start;
+    align-self: start;
+}
+.F_2 {grid-area: 1 / 2 / 2 / 3; 
+    justify-self: start;
+    align-self: start;
+}
+.F_3 {
+    grid-area: 1 / 3 / 2 / 4;
+    justify-self: start;
+    align-self: start;
+}
+.F_4 {
+    grid-area: 1 / 4 / 2 / 5;  
+    justify-self: start;
+    align-self: start;  
+}
+.F_5 {
+    grid-area: 1 / 5 / 2 / 6;  
+    justify-self: start;
+    align-self: start;  
+}
+
+.neobut {
+	border-radius: 5px;
+	background-color: #f0f0f3;
+	box-shadow: 10px 10px 21px #d3d3d6,
+				-10px -10px 21px #fff;
+	transition: .3s all;
+	cursor: pointer;
+}

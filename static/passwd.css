@@ -1,0 +1,53 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* Добавляем оформление элементам grid-контейнера: */
+.container {    
+    top: 45%;
+    left: 35%;
+    position: absolute;
+
+    justify-content: center;
+    align-content: center;
+    display: grid;    
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr 1fr;   
+    column-gap: 5%;
+    row-gap: 5%;
+}
+
+.A {  
+    grid-area: 1 / 1 / 2 / 3;
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;    
+    white-space: nowrap;
+}
+
+.B {
+    grid-area: 1 / 3 / 2 / 4;
+    justify-self: stretch; /* выравнивает грид-элементы по горизонтали */
+    align-self: start; 
+    
+}
+
+.C {
+    grid-area: 2 / 3 / 3 / 4;
+    justify-self: start; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;   
+    opacity: 0.5;
+}
+
+.D {
+    grid-area: 3 / 3 / 4 / 4; 
+    justify-self: end; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;
+}
+
+.neobut {
+	border-radius: 3px;
+	background-color: #f0f0f3;
+	box-shadow: 10px 10px 21px #d3d3d6,
+				-10px -10px 21px #fff;
+	transition: .3s all;
+	cursor: pointer;
+}
