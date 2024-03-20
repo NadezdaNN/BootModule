@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Настройки</title>  
+  <link rel="stylesheet" href="{{ url_for('static', filename='settings.css') }}">
+</head>
+
+<body>
+  <form action="/upload" method="post">
+  <!-- Это будет грид-контейнер с пятью элементами внутри -->
+  <div class="container">
+
+      <div class="A"><label> Настройки </label></div>      
+        
+      <div class="B">       
+        <div class="B_1">Ethernet:</div>
+        <div class="B_2">
+          <input type="checkbox" id="vlan_check" name="vlan_check" onClick="vlan_check();" /><label for="vlan_check">VLAN</label>
+        </div>          
+        <div class="B_3">
+          <input type="text" id="vlan" name="vlan" style="height:100%; width:80%" required disabled /> <!--required-->
+        </div>
+        <div class="B_4" >
+          <input type="checkbox" id="ip_check" name="ip_check" checked /><label for="ip_check">Получение IP автоматически</label>
+        </div>                        
+        <div class="B_5">
+          <input type="text" id='ip' name='ip' required disabled /> <!--required -->
+        </div>
+        <div class="B_6"><label id="ip_label" name="ip_label">IP</label></div>
+        <div class="B_7">
+          <input type="text" id="netmask" name="netmask" required disabled /> <!--required -->
+        </div>
+        <div class="B_8"><label id="netmask_label" name="netmask_label">Netmask</label></div>
+        <div class="B_9">
+          <input type="text" id="gateway" name="gateway" disabled />
+        </div>
+        <div class="B_10"><label id="gateway_label" name="gateway_label">Gateway</label></div>
+        <div class="B_11">
+          <input type="text" id="dns" name="dns" disabled />
+        </div>
+        <div class="B_12"><label id="dns_label" name="dns_label">DNS</label></div>      
+        <div class="B_13"><label style="color: red">{{s1}}</label></div>          
+      </div>
+      
+      
+      <div class="C">       
+        <!--<form action="/up_pass" method="post">-->  
+        <div class="C_1">Администрирование:</div>          
+        <div class="C_2">Новый пароль администратора:</div>        
+        <div class="C_3">
+          <input type="text" id="pass_adm" name="pass_adm" style="height:60%; width:100%" disabled />  <!--required -->
+        </div>       
+        <!--<div class="C_4">
+          <input class="neobut" type="submit" id="pass_save" name="pass_save" value="Принять" disabled />              
+        </div>-->
+        <div class="C_5">
+          <input class="neobut" type="button" name="pass_reset_button" value="Сбросить пароль" onClick="pass_reset();" />          
+        </div>  
+        <div class="C_6"><label style="color: red; opacity: 0.5;">{{s2}}</label></div>                          
+        <!--</form>-->                         
+      </div>       
+      
+      
+      <div class="D">      
+        <div class="D_1">
+          <input type="checkbox" id="vpn_check" name="vpn_check" unchecked /><label for="vpn_check">VPN:</label>
+        </div>        
+        <div class="D_2">
+          <select name="select_vpn" id="select_vpn" disabled>
+            <option value="IPsec/L2TP">IPsec/L2TP</option>                     
+          </select>
+        </div>
+        <div class="D_3">
+          <input type="text" id="ip_vpn" name="ip_vpn" required disabled /> <!--required -->
+        </div>
+        <div class="D_4"><label id="ip_vpn_label" name="ip_vpn_label">IP сервера</label></div> 
+        <div class="D_5">
+          <input type="text" id="ip_sec" name="ip_sec" required disabled /> <!--required -->
+        </div>
+        <div class="D_6"><label id="ip_sec_label" name="ip_sec_label">IP sec</label></div> 
+        <div class="D_7">
+          <input type="text" id="login_vpn" name="login_vpn" required disabled /> <!--required -->
+        </div>
+        <div class="D_8"><label id="login_vpn_label" name="login_vpn_label">Логин</label></div> 
+        <div class="D_9">
+          <input type="text" id="pass_vpn" name="pass_vpn" required disabled /> <!--equired -->
+        </div>
+        <div class="D_10"><label id="pass_vpn_label" name="pass_vpn_label">Пароль</label></div> 
+        <div class="D_11">
+          <input class="neobut" type="button" id="sert" value="Выбрать" style="height:100%; width:100%" disabled /> <!--required -->
+        </div>
+        <div class="D_12"><label id="sert_label" name="sert_label">Cертификат</label></div> 
+        <div class="D_13"><label style="color: red">{{s3}}</label></div> 
+      </div>    
+
+     
+      <div class="E">
+        <div class="E_1">Подключение:</div>
+        <div class="E_2">
+          <select name="select_rdp_web" id="select_rdp_web" onClick="rdp_or_web();">
+            <option value="rdp">RDP</option> 
+            <option value="web">Web</option>            
+          </select>
+        </div>                
+        <div class="E_3">
+          <input type="text" name="adr_web" id="adr_web" disabled />
+        </div>
+        <div class="E_4"><label id="web_label" name="web_label" style="white-space: nowrap;">Адрес Web</label></div> 
+        <div class="E_5">
+          <input type="text" name="adr_rdp" id="adr_rdp" />
+        </div>
+        <div class="E_6"><label id="rdp_label" name="rdp_label">Адрес Rdp</label></div> 
+        <div class="E_7">
+          <input type="text" name="login_rdp" id="login_rdp" />
+        </div>
+        <div class="E_8"><label id="rdp_login_label" name="rdp_login_label">Логин</label></div> 
+        <div class="E_9">
+          <input type="text" name="passwd_rdp" id="passwd_rdp" />
+        </div>
+        <div class="E_10"><label id="rdp_pass_label" name="rdp_pass_label">Пароль</label></div> 
+        <div class="E_11">
+          <input type="checkbox" name="usb_check" id="usb_check" unchecked />
+          <label for="usb_check" id="usb_label" name="usb_label">Проброс USB по RDP</label>
+        </div>
+        <div class="E_12"><label style="color: red">{{s4}}</label></div> 
+      </div>        
+
+      </form>
+      <div class="F0"><hr></div>
+
+     
+      <div class="F">           
+        <div class="F_1">
+          <input class="neobut" type="button" name='test1' value="Информация об устройстве" style="height:100%; width:100%" onClick="func_inf();">
+        </div>
+	<form action="/off", method="post">          
+        <div class="F_2">          
+            <input class="neobut" type="submit" name='test2' value="Выключить" style="height:100%; width:100%" /> <!--onClick="func_off();" -->           
+        </div> 
+	</form>       
+        <div class="F_3">                  
+            <input class="neobut" type="submit" value="Принять настройки" style="height:100%; width:100%" />               
+        </div>
+	<form action="/reboot" method="post">
+        <div class="F_4">
+          <input class="neobut" type="submit" value="Перезагрузка" style="height:100%; width:100%"  /> <!--onClick="func_reboot();"-->
+        </div> 
+	</form>           
+      </div>
+     
+  </div> 
+  
+</body>
+</html>
+
+<script>    
+  document.getElementById('vlan_check').addEventListener("click", hiddenCloseclick);
+  function hiddenCloseclick() {
+  let x = document.getElementById('vlan');
+    if (x.disabled == false){ 
+        x.disabled = true;
+    } else {
+      x.disabled = false;}
+    };    
+</script>
+
+<script>    
+  document.getElementById('ip_check').addEventListener("click", hiddenCloseclick);
+  function hiddenCloseclick() {
+  let ip = document.getElementById('ip');                        
+  let netmask = document.getElementById('netmask');
+  let gateway = document.getElementById('gateway');
+  let dns = document.getElementById('dns');
+  let ip_label = document.getElementById('ip_label');    
+  let netmask_label = document.getElementById('netmask_label'); 
+  let gateway_label = document.getElementById('gateway_label'); 
+  let dns_label = document.getElementById('dns_label');   
+  
+    if (ip.disabled == false){ 
+        ip.disabled = true;                         
+        netmask.disabled = true;
+        gateway.disabled = true;
+        dns.disabled = true;
+        ip_label.style.opacity=0.4;
+        netmask_label.style.opacity=0.4;
+        gateway_label.style.opacity=0.4;
+        dns_label.style.opacity=0.4;        
+    } else {
+      ip.disabled = false;                               
+      netmask.disabled = false;
+      gateway.disabled = false;
+      dns.disabled = false;
+      ip_label.style.opacity=1;
+      netmask_label.style.opacity=1;
+      gateway_label.style.opacity=1;
+      dns_label.style.opacity=1;      
+      //ip_label.style.opacity = parseFloat(ip_label.style.opacity) + 0.6;
+    }
+  };    
+</script>  
+
+<script> // Сбросить пароль
+  function pass_reset()
+  { 
+    let pass_adm = document.getElementById('pass_adm');
+    //let pass_save = document.getElementById('pass_save');            
+    pass_adm.disabled = false;
+    //pass_save.disabled = false;
+  }
+</script>  
+
+<script> // Принять пароль
+  function pass_accept(new_pass)
+  { 
+    /*const data = [1, 2, 3, 4, 5]; 
+  
+    fetch('/process-data', { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify({data: data}) 
+    }) 
+    .then(response => response.text()) 
+    .then(result => { 
+      console.log(result); 
+    }) 
+    .catch(error => { 
+      console.error('Error:', error); 
+    }); */
+
+    text1 = document.getElementById(new_pass).value;
+
+    fetch('/up_pass', { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify({data: text1}) 
+    }) 
+    .then(response => response.text()) 
+    .then(result => { 
+      console.log(result); 
+    }) 
+    .catch(error => { 
+      console.error('Error:', error); 
+    });
+
+    //window.location.href = 'http://127.0.0.1:5000/up_pass';
+    //let response = fetch('http://127.0.0.1:5000/up_pass');
+    let input_pass = document.getElementById('pass_adm');
+    let but_1 = document.getElementById('pass_save');            
+    input_pass.disabled = true;
+    but_1.disabled = true;        
+    return false;                                       
+  }
+</script>
+
+<script> 
+  function rdp_or_web()
+  { 
+    let sel = document.getElementById('select_rdp_web');
+    let adr_web = document.getElementById('adr_web');
+    let adr_rdp = document.getElementById('adr_rdp');
+    let login_rdp = document.getElementById('login_rdp');
+    let passwd_rdp = document.getElementById('passwd_rdp');
+    let usb_check = document.getElementById('usb_check');
+
+    let web_label = document.getElementById('web_label');    
+    let rdp_label = document.getElementById('rdp_label'); 
+    let rdp_login_label = document.getElementById('rdp_login_label'); 
+    let rdp_pass_label = document.getElementById('rdp_pass_label'); 
+    let usb_label = document.getElementById('usb_label'); 
+
+    if (sel.value == 'rdp'){ 
+        adr_web.disabled = true;
+        adr_rdp.disabled = false;     
+        login_rdp.disabled = false;
+        passwd_rdp.disabled = false;
+        usb_check.disabled = false;
+
+        web_label.style.opacity=0.4;
+        rdp_label.style.opacity=1;
+        rdp_login_label.style.opacity=1;
+        rdp_pass_label.style.opacity=1;
+        usb_label.style.opacity=1;
+    } else {
+      adr_web.disabled = false;
+      adr_rdp.disabled = true;     
+      login_rdp.disabled = true;
+      passwd_rdp.disabled = true;
+      usb_check.disabled = true;
+
+      web_label.style.opacity=1;
+      rdp_label.style.opacity=0.4;
+      rdp_login_label.style.opacity=0.4;
+      rdp_pass_label.style.opacity=0.4;
+      usb_label.style.opacity=0.4;
+    }
+  }
+</script>  
+
+<script> // VPN
+  document.getElementById('vpn_check').addEventListener("click", hiddenCloseclick);
+  function hiddenCloseclick() {
+  let select_vpn = document.getElementById('select_vpn');
+  let ip_vpn = document.getElementById('ip_vpn');            
+  let ip_sec = document.getElementById('ip_sec');
+  let login_vpn = document.getElementById('login_vpn');
+  let pass_vpn = document.getElementById('pass_vpn');
+  let sert = document.getElementById('sert');
+
+  let ip_vpn_label = document.getElementById('ip_vpn_label');            
+  let ip_sec_label = document.getElementById('ip_sec_label');
+  let login_vpn_label = document.getElementById('login_vpn_label');
+  let pass_vpn_label = document.getElementById('pass_vpn_label');
+  let sert_label = document.getElementById('sert_label');
+    if (select_vpn.disabled == false){ 
+        select_vpn.disabled = true;
+        ip_vpn.disabled = true;                  
+        ip_sec.disabled = true;
+        login_vpn.disabled = true;
+        pass_vpn.disabled = true;
+        sert.disabled = true;
+
+        ip_vpn_label.style.opacity=0.4;                  
+        ip_sec_label.style.opacity=0.4;
+        login_vpn_label.style.opacity=0.4;
+        pass_vpn_label.style.opacity=0.4;
+        sert_label.style.opacity=0.4;
+    } else {
+      select_vpn.disabled = false;
+      ip_vpn.disabled = false;                
+      ip_sec.disabled = false;
+      login_vpn.disabled = false;
+      pass_vpn.disabled = false;
+      sert.disabled = false;
+      
+      ip_vpn_label.style.opacity=1;               
+      ip_sec_label.style.opacity=1;
+      login_vpn_label.style.opacity=1;
+      pass_vpn_label.style.opacity=1;
+      sert_label.style.opacity=1;
+    }
+  };    
+</script> 
+
+<script> // Информация об устройстве
+  function func_inf()
+  {   
+    alert('Устройство "Тонкий клиент" \nКБУА.466219.001 \nЗАВ.№ 1212205001 \nОС: 20022023');               
+  }
+</script> 
+
+<script> // Выключение
+  function func_off()
+  {   
+    window.location.href = 'http://salutTK1:5000/off';                
+  }
+</script>
+
+<script> // Перезагрузка
+  function func_reboot()
+  {   
+    //var os = require("os");
+    //var hostname = os.hostname();
+    window.location.href = 'http://salutTK1:5000/reboot';                
+  }
+</script>

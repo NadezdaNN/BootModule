@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ввод пароля для доступа к настройкам</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='passwd.css') }}">  
+</head>
+
+<body>  
+  <form action="/validate" method="post">
+  
+  <div class="container">
+    <div class="A"><label style="display:inline-block;"> Пароль администратора:</label></div>
+    <div class="B"> 
+      <input type="text" name="passwd" id="passwd" style="height:100%;width:100%"> 
+    </div>      
+    <div class="C"><label style="color: red">{{s}}</label></div>         
+    <div class="D">
+      <input class="neobut" type="submit" value="ОК" style="height:100%;width:130%"/>
+    </div>   
+  </div>  
+
+  </form>
+</body>
+
+</html> 
+
+<!--<script type="text/javascript">
+  function setNewEntry(entry) {
+      //#block - найти элемент по идентификатору
+      //.block - найти по имени класса
+      $('#C').html(entry);
+  }
+  </script>-->
