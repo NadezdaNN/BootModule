@@ -1,16 +1,20 @@
 from os import system, getlogin
 from PyQt5 import QtWidgets, QtCore, QtGui
 import MyThread
+import MyThread_wsgi
+from PyQt5.QtCore import QSettings
 
 class FormLogo(QtWidgets.QWidget):
         
     startThread = QtCore.pyqtSignal(bool)
     signalShow = QtCore.pyqtSignal()
     finishedApp = QtCore.pyqtSignal(bool)
+        
+    mysettings2 = QSettings()    
     
     def __init__(self, Sec, parent=None): 
-        QtWidgets.QWidget.__init__(self, parent)
-        
+        QtWidgets.QWidget.__init__(self, parent)        
+              
         self.countSec = Sec
         self.setCursor(QtCore.Qt.BlankCursor)    
                 
@@ -41,13 +45,16 @@ class FormLogo(QtWidgets.QWidget):
         self.hbox.addWidget(self.label_2, 0, QtCore.Qt.AlignBottom)
         self.hbox.addWidget(self.label_3, 0, QtCore.Qt.AlignBottom)
         self.hbox.addStretch(1)       
+                
+        self.mythread_wsgi = MyThread_wsgi.MyThread_wsgi()        
+        self.mythread_wsgi.start()
         
         self.mythread = MyThread.MyThread(self.countSec)        
         self.mythread.currentValue.connect(self.on_display, QtCore.Qt.QueuedConnection)
         self.startThread.connect(self.mythread.StartOrStop, QtCore.Qt.QueuedConnection)
         self.mythread.finished.connect(self.finished, QtCore.Qt.QueuedConnection)
         self.mythread.start()    
-        
+                        
     def on_display(self, s):
         self.label_3.setText(str(s))
         
@@ -69,5 +76,3 @@ class FormLogo(QtWidgets.QWidget):
         self.close()        
         nameUser=getlogin()        
         system(f"/home/{nameUser}/runrdp") # freeRDP or WEB
-        #system(f"echo 'yes' | /home/{nameUser}/runrdp") # rdesktop           
-        #system(f"sudo remmina /home/{nameUser}/file.remmina") # Remmina        

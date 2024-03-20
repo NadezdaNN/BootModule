@@ -3,12 +3,16 @@
 from sys import argv, exit
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt
+from PyQt5 import QtCore
 import FormLogo
 import FormLogPass
 import FormSettings
 import FormWarning
 import FormInf
 import FormDelSettings
+from PyQt5.QtCore import QSettings
+
+mysettings2 = QtCore.QSettings()
 
 if __name__ == "__main__":
     app = QApplication(argv)
@@ -19,6 +23,7 @@ if __name__ == "__main__":
     formWarning = FormWarning.FormWarning()    
     formInf = FormInf.FormInf() 
     formDelSettings = FormDelSettings.FormDelSettings()
+    
            
     formLogo.signalShow.connect(formLogPass.showForm, Qt.QueuedConnection)
     formLogPass.signalShow.connect(formLogo.showForm, Qt.QueuedConnection)
@@ -33,5 +38,6 @@ if __name__ == "__main__":
     formDelSettings.signalHide.connect(formLogPass.showForm, Qt.QueuedConnection)
     formDelSettings.signalDelSettings.connect(formSettings.slotDelSett, Qt.QueuedConnection)
     
-    formLogo.showFullScreen()      
+    formLogo.showFullScreen()        
+    
     exit(app.exec_())    

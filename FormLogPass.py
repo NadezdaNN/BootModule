@@ -78,7 +78,7 @@ class FormLogPass(QtWidgets.QWidget):
 
   
     def buttonOK_clicked(self):
-        password = open('password.py').read()
+        password = open('pass.txt').read()
         password = password.rstrip('\n')
         
         if self.passwordEdit.text() == password:                 

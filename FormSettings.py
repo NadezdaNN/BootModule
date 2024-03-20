@@ -4,6 +4,9 @@ from qtwidgets import PasswordEdit
 from keyboard import press_and_release
 import FormSettingsD
 import MyThreadNet
+import MySettings
+import FormLogo
+
 
 class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWidget, ,QtWidgets.QWidget QtWidgets.QWidget, 
 
@@ -24,7 +27,7 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         QtWidgets.QWidget.__init__(self, parent)        
         self.ui = FormSettingsD.Ui_Form()    
         self.ui.setupUi(self)           
-        
+                
         # Переопределяем компоненты родительского класса        
         self.cx = QtWidgets.QApplication.desktop().width()
         self.cy = QtWidgets.QApplication.desktop().height()  
@@ -45,15 +48,9 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         self.ui.gridLayout_4.addWidget(self.ui.editPass_2, 4, 0, 1, 3)
 
         self.lineEdit_5 = QtWidgets.QLineEdit(self) # Новый компонент             
-        self.lineEdit_5.setMaximumWidth(50)
-        #self.ui.settings.setFixedWidth(50)        
+        self.lineEdit_5.setMaximumWidth(50)          
         self.ui.gridLayout_3.addWidget(self.lineEdit_5, 0, 4, 1, 1)        
-
-        '''self.ui.checkBox_3.setStyleSheet("QCheckBox::indicator" 
-            "{"
-            "background-color : white;"
-            "}")'''
-
+        
         self.ui.editIP.setCursorPosition(0)
         self.ui.editIP.installEventFilter(self)             
         self.ui.editNetmask.setCursorPosition(0)
@@ -150,20 +147,22 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         self.myThreadNet.signalSetTextVPN.connect(self.slotSetTextVPN, QtCore.Qt.QueuedConnection)
         self.thread.start()
 
-        if self.mysettings.value("checkBox_4.isChecked")=='true': # Старт VPN при загрузке ТК
+        print('123456789_init=', FormLogo.FormLogo.mysettings2.value("123"))
+        if MySettings.mysettings.value("checkBox_4.isChecked")==True: # Старт VPN при загрузке ТК
             self.signalUpVPN2.emit()          
                   
         
     def slotDelSett(self):
-        self.mysettings.clear()  
-        self.mysettings.setValue("checkBox.isChecked", 'true')            
+        MySettings.mysettings.clear()  
+        MySettings.mysettings.setValue("checkBox.isChecked", True)     
+        MySettings.mysettings.setValue("checkBox_3.isChecked", False)        
         self.showSettings()   
-        self.mysettings.setValue("comboBox.text", 'IPsec/L2TP')      
-        self.mysettings.setValue("checkBox_4.isChecked", 'false')             
+        MySettings.mysettings.setValue("comboBox.text", 'IPsec/L2TP')      
+        MySettings.mysettings.setValue("checkBox_4.isChecked", False)             
         self.showSettingsVPN()   
-        self.mysettings.setValue("comboBox_2.text", 'RDP')
+        MySettings.mysettings.setValue("comboBox_2.text", 'RDP')
         self.showSettingsRDP() 
-        self.mysettings.setValue("default_password", '123') # default password
+        MySettings.mysettings.setValue("default_password", '123') # default password
                        
 
     def pushButton_3_clicked(self): # Кнопка Информация об устройстве
@@ -225,7 +224,8 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         self.ui.labelEth.setStyleSheet("background-color: lightgray")
         self.ui.checkBox.setStyleSheet("background-color: lightgray")
         self.ui.lineEdit_3.setStyleSheet("background-color: lightgray")    
-        self.lineEdit_5.setStyleSheet("background-color: lightgray")    
+        self.lineEdit_5.setStyleSheet("background-color: lightgray")   
+        self.ui.checkBox_3.setStyleSheet("background-color: lightgray") 
         self.setStyleSheet("background-color: lightgray")                
         
         self.signalShowInf.emit() 
@@ -419,16 +419,7 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                     i=i+1                
                 line = ''.join(line).replace(" ", '')              
                 source.setText(line)
-                source.setCursorPosition(start)
-            
-            """if ((1<=posCurs<3 and len(str)>=posCurs+1 and str[posCurs-1].isdigit() and str[posCurs]=='.') or
-                    (posCurs>=3 and len(str)>=posCurs+1 and str[posCurs-1].isdigit() and str[posCurs-2].isdigit() and str[posCurs-3]=='.')):                 
-                if (self.countSpase == False):
-                    self.signalSpace.emit()
-                    self.countSpase=True
-                else:
-                    if (posCurs!=1):
-                        self.signalSpace.emit()"""               
+                source.setCursorPosition(start)                          
                                 
             if (posCurs>=3 and len(line)>=posCurs+1 and line[posCurs-1].isdigit() and line[posCurs-2].isdigit() and line[posCurs-3].isdigit()):
                 source.setCursorPosition(posCurs+1)
@@ -515,7 +506,8 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         self.ui.labelNotify.setStyleSheet("background-color: rgb(240, 240, 240)")                       
         self.ui.labelEth.setStyleSheet("background-color: rgb(240, 240, 240)")
         self.ui.checkBox.setStyleSheet("background-color: rgb(240, 240, 240)")       
-        self.lineEdit_5.setStyleSheet("background-color: rgb(240, 240, 240)")        
+        self.lineEdit_5.setStyleSheet("background-color: rgb(240, 240, 240)")     
+        self.ui.checkBox_3.setStyleSheet("background-color: rgb(240, 240, 240)")   
         self.setStyleSheet("background-color: rgb(240, 240, 240)")
         
         self.ui.checkBox_2.setDisabled(True) # Отключение Wi-Fi
@@ -610,6 +602,7 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         self.ui.checkBox.setStyleSheet("background-color: lightgray")
         self.ui.lineEdit_3.setStyleSheet("background-color: lightgray")        
         self.lineEdit_5.setStyleSheet("background-color: lightgray")
+        self.ui.checkBox_3.setStyleSheet("background-color: lightgray")
         self.setStyleSheet("background-color: lightgray")
 
         self.signalShowWarning.emit()
@@ -655,22 +648,22 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
             self.ui.labelDNS.setDisabled(False)            
             self.ui.labelSettEth.setText("")                          
                         
-            if (self.mysettings.value("editIP.text.static") is None):
+            if (MySettings.mysettings.value("editIP.text.static") is None):
                 self.ui.editIP.setText('...')
             else:
-                self.ui.editIP.setText(self.mysettings.value("editIP.text.static")) 
-            if self.mysettings.value("editNetmask.text.static") is None:
+                self.ui.editIP.setText(MySettings.mysettings.value("editIP.text.static")) 
+            if MySettings.mysettings.value("editNetmask.text.static") is None:
                 self.ui.editNetmask.setText('...')
             else:
-                self.ui.editNetmask.setText(self.mysettings.value("editNetmask.text.static")) 
-            if self.mysettings.value("editDHCP.text.static") is None:
+                self.ui.editNetmask.setText(MySettings.mysettings.value("editNetmask.text.static")) 
+            if MySettings.mysettings.value("editDHCP.text.static") is None:
                 self.ui.editDHCP.setText('...')
             else:
-                self.ui.editDHCP.setText(self.mysettings.value("editDHCP.text.static"))
-            if self.mysettings.value("editDNS.text.static") is None:
+                self.ui.editDHCP.setText(MySettings.mysettings.value("editDHCP.text.static"))
+            if MySettings.mysettings.value("editDNS.text.static") is None:
                 self.ui.editDNS.setText('...')
             else:
-                self.ui.editDNS.setText(self.mysettings.value("editDNS.text.static"))            
+                self.ui.editDNS.setText(MySettings.mysettings.value("editDNS.text.static"))            
         
 
     def checkBox_2_clicked(self):   # Button Wi-Fi    
@@ -719,7 +712,10 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         if self.ui.checkBox_3.isChecked():
             self.lineEdit_5.setStyleSheet("background-color: white")
             self.lineEdit_5.setDisabled(False) 
-            self.lineEdit_5.setText(self.mysettings.value("lineEdit_5.text"))
+            #self.lineEdit_5.setText(MySettings.mysettings.value("lineEdit_5.text"))
+            self.lineEdit_5.setText(FormLogo.FormLogo.mysettings2.value("123"))
+            #FormLogo.FormLogo.mysettings2.setValue("123",444)
+            print('main.mysettings2.value in FormSettings=', FormLogo.FormLogo.mysettings2.value("123"))
         else:
             self.lineEdit_5.setStyleSheet("background-color: rgb(240, 240, 240)")
             self.lineEdit_5.setDisabled(True)
@@ -784,11 +780,11 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
             self.ui.label_5.setDisabled(True)                           
             self.ui.editLog3.setDisabled(False)   
             self.ui.editLog3.setStyleSheet("background-color: white")  
-            self.ui.editLog3.setText(self.mysettings.value("editLog3.text.openvpn"))         
+            self.ui.editLog3.setText(MySettings.mysettings.value("editLog3.text.openvpn"))         
             self.ui.labelNetSel_2.setDisabled(False)            
             self.ui.editPass_2.setDisabled(False)
             self.ui.editPass_2.setStyleSheet("background-color: white")
-            self.ui.editPass_2.setText(self.mysettings.value("editPass_2.text.openvpn")) 
+            self.ui.editPass_2.setText(MySettings.mysettings.value("editPass_2.text.openvpn")) 
             self.ui.labelPass_2.setDisabled(False)
             self.ui.pushButton_2.setDisabled(False)   
             self.ui.pushButton_2.setStyleSheet("background-color: white") 
@@ -796,19 +792,19 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         elif strVPN=="IPsec/L2TP" and self.ui.checkBox_4.isChecked():
             self.ui.lineEdit.setDisabled(False) 
             self.ui.lineEdit.setStyleSheet("background-color: white") 
-            self.ui.lineEdit.setText(self.mysettings.value("lineEdit.text.l2tp"))
+            self.ui.lineEdit.setText(MySettings.mysettings.value("lineEdit.text.l2tp"))
             self.ui.label_4.setDisabled(False) 
             self.ui.lineEdit_2.setDisabled(False) 
             self.ui.lineEdit_2.setStyleSheet("background-color: white") 
-            self.ui.lineEdit_2.setText(self.mysettings.value("lineEdit_2.text.l2tp"))
+            self.ui.lineEdit_2.setText(MySettings.mysettings.value("lineEdit_2.text.l2tp"))
             self.ui.label_5.setDisabled(False)                           
             self.ui.editLog3.setDisabled(False)   
             self.ui.editLog3.setStyleSheet("background-color: white")     
-            self.ui.editLog3.setText(self.mysettings.value("editLog3.text.l2tp"))     
+            self.ui.editLog3.setText(MySettings.mysettings.value("editLog3.text.l2tp"))     
             self.ui.labelNetSel_2.setDisabled(False)            
             self.ui.editPass_2.setDisabled(False)
             self.ui.editPass_2.setStyleSheet("background-color: white")
-            self.ui.editPass_2.setText(self.mysettings.value("editPass_2.text.l2tp")) 
+            self.ui.editPass_2.setText(MySettings.mysettings.value("editPass_2.text.l2tp")) 
             self.ui.labelPass_2.setDisabled(False)
             self.ui.pushButton_2.setDisabled(True)    
             self.ui.pushButton_2.setStyleSheet("background-color: rgb(240, 240, 240)") 
@@ -823,7 +819,7 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                                             "background-color: white;"                                            
                                         "}")  
         if strConnect=="Web":      
-            self.ui.lineEdit_3.setText(self.mysettings.value("lineEdit_3.text")) 
+            self.ui.lineEdit_3.setText(MySettings.mysettings.value("lineEdit_3.text")) 
             self.ui.lineEdit_3.setDisabled(False)   
             self.ui.lineEdit_3.setStyleSheet("background-color: white")
             self.ui.label_6.setDisabled(False)            
@@ -848,20 +844,20 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
             self.ui.lineEdit_3.setDisabled(True)   
             self.ui.lineEdit_3.setStyleSheet("background-color: rgb(240, 240, 240)")
             self.ui.label_6.setDisabled(True)            
-            self.ui.editAdrRDP.setText(self.mysettings.value("editAdrRDP.text"))                         
+            self.ui.editAdrRDP.setText(MySettings.mysettings.value("editAdrRDP.text"))                         
             self.ui.editAdrRDP.setDisabled(False)  
             self.ui.editAdrRDP.setStyleSheet("background-color: white")
             self.ui.labelAdrRDP.setDisabled(False)
-            self.ui.editLog2.setText(self.mysettings.value("editLog2.text"))  
+            self.ui.editLog2.setText(MySettings.mysettings.value("editLog2.text"))  
             self.ui.editLog2.setDisabled(False)  
             self.ui.editLog2.setStyleSheet("background-color: white")
             self.ui.labelLog2.setDisabled(False)      
-            self.ui.editPass2.setText(self.mysettings.value("editPass2.text"))  
+            self.ui.editPass2.setText(MySettings.mysettings.value("editPass2.text"))  
             self.ui.editPass2.setDisabled(False) 
             self.ui.editPass2.setStyleSheet("background-color: white")
             self.ui.labelPass2.setDisabled(False)
             self.ui.labelSettRDP.setText('') 
-            if self.mysettings.value("checkBox_5.isChecked")=='true':
+            if MySettings.mysettings.value("checkBox_5.isChecked")=='true':
                 self.ui.checkBox_5.setChecked(True)
             else:
                 self.ui.checkBox_5.setChecked(False)             
@@ -883,7 +879,8 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
             self.ui.labelNotify.setStyleSheet("color: red")
             self.ui.labelNotify.setText("Введите пароль")            
         else:
-            filePassword=open('password.py', 'w')            
+            
+            filePassword=open('pass.txt', 'w')            
             filePassword.write(self.ui.editNewPass.text())               
             filePassword.close()    
             self.ui.editNewPass.setText('')
@@ -992,9 +989,10 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
 
         else: #Ethernet                        
             if self.ui.checkBox.isChecked(): #динамический IP-адрес     
-                if (str(self.ui.checkBox.isChecked()).lower() != str(self.mysettings.value("checkBox.isChecked"))) or \
-                        (str(self.ui.checkBox_3.isChecked()).lower() != str(self.mysettings.value("checkBox_3.isChecked"))) or \
-                        (self.lineEdit_5.text() != self.mysettings.value("lineEdit_5.text"))    :                            
+                print('123=', MySettings.mysettings.value("lineEdit_5.text"))
+                if (str(self.ui.checkBox.isChecked()).lower() != str(MySettings.mysettings.value("checkBox.isChecked"))) or \
+                        (str(self.ui.checkBox_3.isChecked()).lower() != str(MySettings.mysettings.value("checkBox_3.isChecked"))) or \
+                        (self.lineEdit_5.text() != MySettings.mysettings.value("lineEdit_5.text"))    :                            
 
                     self.setCursor(QtCore.Qt.BusyCursor) 
 
@@ -1042,10 +1040,10 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                             self.lineEdit_5.setText('1')                            
                         file.write(f'auto eth0.{self.lineEdit_5.text()}\n')
                         file.write(f'iface eth0.{self.lineEdit_5.text()} inet dhcp\n')                        
-                    
-                    self.mysettings.setValue("checkBox.isChecked", self.ui.checkBox.isChecked())
-                    self.mysettings.setValue("checkBox_3.isChecked", self.ui.checkBox_3.isChecked())
-                    self.mysettings.setValue("lineEdit_5.text", self.lineEdit_5.text())
+                    print('741=', self.ui.checkBox_3.isChecked())
+                    MySettings.mysettings.setValue("checkBox.isChecked", self.ui.checkBox.isChecked())
+                    MySettings.mysettings.setValue("checkBox_3.isChecked", self.ui.checkBox_3.isChecked())
+                    MySettings.mysettings.setValue("lineEdit_5.text", self.lineEdit_5.text())
                                         
                     self.signalUpEth.emit()
                 else:
@@ -1071,14 +1069,15 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                         flag4 = True                    
 
                 if flag:
-                    if (self.ui.editIP.text()==self.mysettings.value("editIP.text.static") and 
-                            self.ui.editNetmask.text()==self.mysettings.value("editNetmask.text.static") and
-                            self.ui.editDHCP.text()==self.mysettings.value("editDHCP.text.static") and 
-                            self.ui.editDNS.text()==self.mysettings.value("editDNS.text.static") and                            
-                            str(self.ui.checkBox.isChecked()).lower() == str(self.mysettings.value("checkBox.isChecked")) and
-                            str(self.ui.checkBox_3.isChecked()).lower() == str(self.mysettings.value("checkBox_3.isChecked")) and
-                            self.lineEdit_5.text()==self.mysettings.value("lineEdit_5.text")):                             
-                        pass
+                    if (self.ui.editIP.text()==MySettings.mysettings.value("editIP.text.static") and 
+                            self.ui.editNetmask.text()==MySettings.mysettings.value("editNetmask.text.static") and
+                            self.ui.editDHCP.text()==MySettings.mysettings.value("editDHCP.text.static") and 
+                            self.ui.editDNS.text()==MySettings.mysettings.value("editDNS.text.static") and                            
+                            str(self.ui.checkBox.isChecked()).lower() == str(MySettings.mysettings.value("checkBox.isChecked")) and
+                            str(self.ui.checkBox_3.isChecked()).lower() == str(MySettings.mysettings.value("checkBox_3.isChecked")) and
+                            self.lineEdit_5.text()==MySettings.mysettings.value("lineEdit_5.text")):                             
+                        #pass
+                        print('1234=', MySettings.mysettings.value("lineEdit_5.text"))
                     else:
                         self.setCursor(QtCore.Qt.BusyCursor)                         
                         try:
@@ -1244,14 +1243,14 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                         
                         file.close()
 
-                        self.mysettings.setValue("checkBox.isChecked", self.ui.checkBox.isChecked())
-                        self.mysettings.setValue("editIP.text.static", self.ui.editIP.text()) 
-                        self.mysettings.setValue("editNetmask.text.static", self.ui.editNetmask.text()) 
-                        self.mysettings.setValue("editDHCP.text.static", self.ui.editDHCP.text())
-                        self.mysettings.setValue("editDNS.text.static", self.ui.editDNS.text())                        
-                        self.mysettings.setValue("checkBox.isChecked", self.ui.checkBox.isChecked())
-                        self.mysettings.setValue("checkBox_3.isChecked", self.ui.checkBox_3.isChecked())                        
-                        self.mysettings.setValue("lineEdit_5.text", self.lineEdit_5.text())
+                        MySettings.mysettings.setValue("checkBox.isChecked", self.ui.checkBox.isChecked())
+                        MySettings.mysettings.setValue("editIP.text.static", self.ui.editIP.text()) 
+                        MySettings.mysettings.setValue("editNetmask.text.static", self.ui.editNetmask.text()) 
+                        MySettings.mysettings.setValue("editDHCP.text.static", self.ui.editDHCP.text())
+                        MySettings.mysettings.setValue("editDNS.text.static", self.ui.editDNS.text())                        
+                        MySettings.mysettings.setValue("checkBox.isChecked", self.ui.checkBox.isChecked())
+                        MySettings.mysettings.setValue("checkBox_3.isChecked", self.ui.checkBox_3.isChecked())                        
+                        MySettings.mysettings.setValue("lineEdit_5.text", self.lineEdit_5.text())
                         
                         self.signalUpEth.emit()                        
                 else:
@@ -1261,14 +1260,14 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
         if self.ui.checkBox_4.isChecked():       
             
             if self.ui.comboBox.currentText()=='OpenVPN':      
-                if (self.ui.comboBox.currentText()==self.mysettings.value("comboBox.text") and                        
-                        self.ui.editLog3.text()==self.mysettings.value("editLog3.text.openvpn") and 
-                        self.ui.editPass_2.text()==self.mysettings.value("editPass_2.text.openvpn")):
+                if (self.ui.comboBox.currentText()==MySettings.mysettings.value("comboBox.text") and                        
+                        self.ui.editLog3.text()==MySettings.mysettings.value("editLog3.text.openvpn") and 
+                        self.ui.editPass_2.text()==MySettings.mysettings.value("editPass_2.text.openvpn")):
                     pass
                 else:
-                    self.mysettings.setValue("comboBox.text", self.ui.comboBox.currentText())                 
-                    self.mysettings.setValue("editLog3.text.openvpn", self.ui.editLog3.text())
-                    self.mysettings.setValue("editPass_2.text.openvpn", self.ui.editPass_2.text())
+                    MySettings.mysettings.setValue("comboBox.text", self.ui.comboBox.currentText())                 
+                    MySettings.mysettings.setValue("editLog3.text.openvpn", self.ui.editLog3.text())
+                    MySettings.mysettings.setValue("editPass_2.text.openvpn", self.ui.editPass_2.text())
                     self.ui.label_2.setStyleSheet("color: black")
                     self.ui.label_2.setText("Настройки сохранены")             
 
@@ -1302,13 +1301,13 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                         self.ui.label_2.setText("Ввод недопустимых значений")
 
             if self.ui.comboBox.currentText()=='IPsec/L2TP':
-                if (self.ui.comboBox.currentText()==self.mysettings.value("comboBox.text") and
-                        self.ui.lineEdit.text()==self.mysettings.value("lineEdit.text.l2tp") and 
-                        self.ui.lineEdit_2.text()==self.mysettings.value("lineEdit_2.text.l2tp") and
-                        self.ui.editLog3.text()==self.mysettings.value("editLog3.text.l2tp") and 
-                        self.ui.editPass_2.text()==self.mysettings.value("editPass_2.text.l2tp") and
-                        self.ui.editAdrRDP.text()==self.mysettings.value("editAdrRDP.text")):
-                    if str(self.ui.checkBox_4.isChecked()).lower() == str(self.mysettings.value("checkBox_4.isChecked")):
+                if (self.ui.comboBox.currentText()==MySettings.mysettings.value("comboBox.text") and
+                        self.ui.lineEdit.text()==MySettings.mysettings.value("lineEdit.text.l2tp") and 
+                        self.ui.lineEdit_2.text()==MySettings.mysettings.value("lineEdit_2.text.l2tp") and
+                        self.ui.editLog3.text()==MySettings.mysettings.value("editLog3.text.l2tp") and 
+                        self.ui.editPass_2.text()==MySettings.mysettings.value("editPass_2.text.l2tp") and
+                        self.ui.editAdrRDP.text()==MySettings.mysettings.value("editAdrRDP.text")):
+                    if str(self.ui.checkBox_4.isChecked()).lower() == str(MySettings.mysettings.value("checkBox_4.isChecked")).lower():
                         pass
                     else:                
                         self.setCursor(QtCore.Qt.BusyCursor)        
@@ -1358,11 +1357,11 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                         os.system(f'echo {self.ui.lineEdit.text()} > ip_server_vpn.txt')
                         os.system(f'echo {self.ui.editAdrRDP.text()} > ip_rdp.txt')                                    
                         
-                        self.mysettings.setValue("comboBox.text", self.ui.comboBox.currentText()) 
-                        self.mysettings.setValue("lineEdit.text.l2tp", self.ui.lineEdit.text()) 
-                        self.mysettings.setValue("lineEdit_2.text.l2tp", self.ui.lineEdit_2.text())
-                        self.mysettings.setValue("editLog3.text.l2tp", self.ui.editLog3.text())
-                        self.mysettings.setValue("editPass_2.text.l2tp", self.ui.editPass_2.text())
+                        MySettings.mysettings.setValue("comboBox.text", self.ui.comboBox.currentText()) 
+                        MySettings.mysettings.setValue("lineEdit.text.l2tp", self.ui.lineEdit.text()) 
+                        MySettings.mysettings.setValue("lineEdit_2.text.l2tp", self.ui.lineEdit_2.text())
+                        MySettings.mysettings.setValue("editLog3.text.l2tp", self.ui.editLog3.text())
+                        MySettings.mysettings.setValue("editPass_2.text.l2tp", self.ui.editPass_2.text())
                         
                         self.ui.label_2.setStyleSheet("color: black")
                         self.ui.label_2.setText("Настройки сохранены")
@@ -1371,47 +1370,47 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                         self.ui.label_2.setStyleSheet("color: red")
                         self.ui.label_2.setText("Ввод недопустимых значений")   
 
-            self.mysettings.setValue("checkBox_4.isChecked", self.ui.checkBox_4.isChecked())            
+            MySettings.mysettings.setValue("checkBox_4.isChecked", self.ui.checkBox_4.isChecked())            
         else:            
-            if str(self.ui.checkBox_4.isChecked()).lower() == str(self.mysettings.value("checkBox_4.isChecked")):
+            if str(self.ui.checkBox_4.isChecked()).lower() == str(MySettings.mysettings.value("checkBox_4.isChecked")).lower():
                 pass
             else:
-                if self.mysettings.value("comboBox.text")=='IPsec/L2TP':
+                if MySettings.mysettings.value("comboBox.text")=='IPsec/L2TP':
                     os.system('sudo route del default dev ppp0')
                     os.system('sudo echo "d myvpn" > /var/run/xl2tpd/l2tp-control && sudo ipsec down myvpn')
                     os.system(f"sudo systemctl disable vpnscript.service")                    
-                elif self.mysettings.value("comboBox.text")=='OpenVPN':
+                elif MySettings.mysettings.value("comboBox.text")=='OpenVPN':
                     pass
                 self.signalDownVPN.emit()
                 self.ui.label_2.setStyleSheet("color: black")                     
                 self.ui.label_2.setText("VPN отключен")
-                self.mysettings.setValue("checkBox_4.isChecked", self.ui.checkBox_4.isChecked())             
+                MySettings.mysettings.setValue("checkBox_4.isChecked", self.ui.checkBox_4.isChecked())             
 
         # Connection RDP/Web  
-        if self.ui.comboBox_2.currentText()=='Web' and (self.ui.comboBox_2.currentText()!=self.mysettings.value('comboBox_2.text') or self.ui.lineEdit_3.text() != self.mysettings.value('lineEdit_3.text')):       
+        if self.ui.comboBox_2.currentText()=='Web' and (self.ui.comboBox_2.currentText()!=MySettings.mysettings.value('comboBox_2.text') or self.ui.lineEdit_3.text() != self.mysettings.value('lineEdit_3.text')):       
             if self.ui.lineEdit_3.text() != '':     
                 nameUser=os.getlogin()            
                 with open("/home/" + nameUser + "/runrdp", 'w+') as file:    
                     line=self.ui.lineEdit_3.text()                    
                     if ('http://' in line) or ('https://' in line):            
-                        file.write(f'sudo -u {nameUser} chromium {self.ui.lineEdit_3.text()} --enable-kiosk-mode') 
+                        file.write(f'sudo -u {nameUser} chromium {self.ui.lineEdit_3.text()}') 
                     else:
-                        file.write(f'sudo -u {nameUser} chromium https://{self.ui.lineEdit_3.text()} --enable-kiosk-mode')
+                        file.write(f'sudo -u {nameUser} chromium https://{self.ui.lineEdit_3.text()}')
 
-                self.mysettings.setValue("comboBox_2.text", self.ui.comboBox_2.currentText())
-                self.mysettings.setValue("lineEdit_3.text", self.ui.lineEdit_3.text())
+                MySettings.mysettings.setValue("comboBox_2.text", self.ui.comboBox_2.currentText())
+                MySettings.mysettings.setValue("lineEdit_3.text", self.ui.lineEdit_3.text())
 
                 self.ui.labelSettRDP.setStyleSheet("color: black")                    
                 self.ui.labelSettRDP.setText("Настройки сохранены")
-            elif self.ui.lineEdit_3.text() == self.mysettings.value('lineEdit_3.text'):
+            elif (self.ui.comboBox_2.currentText()=='Web' and self.ui.lineEdit_3.text() == MySettings.mysettings.value('lineEdit_3.text')):
                 pass
-            else:
+            elif (self.ui.comboBox_2.currentText()=='Web' and self.ui.lineEdit_3.text() == ''):
                 self.ui.labelSettRDP.setStyleSheet("color: red")
                 self.ui.labelSettRDP.setText("Ввод недопустимых значений")
         
-        if self.ui.comboBox_2.currentText()=='RDP' and self.ui.comboBox_2.currentText()!=self.mysettings.value('comboBox_2.text'):
+        if self.ui.comboBox_2.currentText()=='RDP' or self.ui.comboBox_2.currentText()!=MySettings.mysettings.value('comboBox_2.text') or self.ui.editAdrRDP.text()!=self.mysettings.value('editAdrRDP.text'):
             flag = True            
-            if (self.ui.editAdrRDP.text() != ""):                
+            if (self.ui.comboBox_2.currentText()=='RDP' and self.ui.editAdrRDP.text() != ""):                
                 
                 if self.ui.checkBox_5.isChecked():   
                     flagUSB = True
@@ -1424,30 +1423,37 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                     
                 if (self.ui.editLog2.text().rstrip('\n')=="" and self.ui.editPass2.text().rstrip('\n')==""):
                     if flagUSB:
-                        os.system('sudo mkdir /media/sda1')
-                        file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n')+" /drive:sda1,/media/sda1")
+                        os.system('sudo mkdir /media/root && sudo chmod 777 /media/root')
+                        os.system('sudo udiskie -a &')
+                        file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n')+" /drive:sda1,/media/root")
                         file.write(" /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone \n")
                     else:
-                        os.system('sudo rmdir /media/sda1')
+                        os.system('sudo rmdir /media/root')
+                        #os.system('sudo udiskie -a &')
                         file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n'))
-                        file.write(" /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone\n")                    
+                        file.write(" /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone\n")
                 if (self.ui.editLog2.text().rstrip('\n')!="" and self.ui.editPass2.text().rstrip('\n')==""):
                     if flagUSB:
-                        os.system('sudo mkdir /media/sda1')
+                        os.system('sudo mkdir /media/root && sudo chmod 777 /media/root')
+                        #os.system('sudo mkdir /media/sda1')
+                        os.system('sudo udiskie -a &')
                         file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n')+" /u:"+self.ui.editLog2.text().rstrip(' ').rstrip('\n').strip('\n')) 
-                        file.write(" /drive:sda1,/media/sda1 /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone \n")
+                        file.write(" /drive:sda1,/media/root /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone \n")
                     else:
-                        os.system('sudo rmdir /media/sda1')
+                        os.system('sudo rmdir /media/root')
+                        #os.system('sudo udiskie -a &')
                         file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n')+" /u:"+self.ui.editLog2.text().rstrip(' ').rstrip('\n').strip('\n'))
                         file.write(" /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone \n")
                 if (self.ui.editLog2.text().rstrip('\n')!="" and self.ui.editPass2.text().rstrip('\n')!=""):
                     if flagUSB:
-                        os.system('sudo mkdir /media/sda1')
+                        os.system('sudo mkdir /media/root && sudo chmod 777 /media/root')
+                        #os.system('sudo mkdir /media/sda1')
+                        os.system('sudo udiskie -a &')
                         file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n')+" /u:"+self.ui.editLog2.text().rstrip(' ').rstrip('\n').strip('\n'))
-                        file.write(" /p:"+self.ui.editPass2.text().rstrip(' ').rstrip('\n').strip('\n')+" /drive:sda1,/media/sda1")
+                        file.write(" /p:"+self.ui.editPass2.text().rstrip(' ').rstrip('\n').strip('\n')+" /drive:sda1,/media/root")
                         file.write(" /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone \n")
                     else:
-                        os.system('sudo rmdir /media/sda1')
+                        os.system('sudo rmdir /media/root')
                         file.write("xfreerdp /v:"+self.ui.editAdrRDP.text().rstrip('\n')+" /u:"+self.ui.editLog2.text().rstrip(' ').rstrip('\n').strip('\n'))
                         file.write(" /p:"+self.ui.editPass2.text().rstrip(' ').rstrip('\n').strip('\n')+" /f /kbd-type:en-us /bpp:32 /sec:tls /network:auto /cert-ignore /sound /video /microphone \n")
                 file.close()
@@ -1458,15 +1464,15 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                 self.login_rdp = self.ui.editLog2.text().rstrip('\n')                
                 
                 # Сохранение настроек RDP
-                self.mysettings.setValue("comboBox_2.text", self.ui.comboBox_2.currentText())                     
-                self.mysettings.setValue("editAdrRDP.text", self.ui.editAdrRDP.text()) 
-                self.mysettings.setValue("editLog2.text", self.ui.editLog2.text()) 
-                self.mysettings.setValue("editPass2.text", self.ui.editPass2.text()) 
-                self.mysettings.setValue("checkBox_5.isChecked", self.ui.checkBox_5.isChecked()) 
-                
+                MySettings.mysettings.setValue("comboBox_2.text", self.ui.comboBox_2.currentText())                     
+                MySettings.mysettings.setValue("editAdrRDP.text", self.ui.editAdrRDP.text()) 
+                MySettings.mysettings.setValue("editLog2.text", self.ui.editLog2.text()) 
+                MySettings.mysettings.setValue("editPass2.text", self.ui.editPass2.text()) 
+                MySettings.mysettings.setValue("checkBox_5.isChecked", self.ui.checkBox_5.isChecked()) 
+                                
                 self.ui.labelSettRDP.setStyleSheet("color: black")                    
                 self.ui.labelSettRDP.setText("Настройки сохранены")      
-            else:
+            elif (self.ui.comboBox_2.currentText()=='RDP' and self.ui.editAdrRDP.text() == ""):
                 self.ui.labelSettRDP.setStyleSheet("color: red")
                 self.ui.labelSettRDP.setText("Ввод недопустимых значений")
             
@@ -1588,16 +1594,18 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
                 
 
     def showSettings(self):                  
-        if self.mysettings.value("checkBox.isChecked")=='true':  
+        if MySettings.mysettings.value("checkBox.isChecked")=='true':  
             self.ui.checkBox.setChecked(True)            
         self.checkBox_clicked() 
-        if self.mysettings.value("checkBox_3.isChecked")=='true':  
+        if MySettings.mysettings.value("checkBox_3.isChecked")=='true':  
             self.ui.checkBox_3.setChecked(True)
+        elif MySettings.mysettings.value("checkBox_3.isChecked")=='false':  
+            self.ui.checkBox_3.setChecked(False)
         self.checkBox_3_clicked()
 
 
     def showSettingsVPN(self):       
-        if self.mysettings.value("checkBox_4.isChecked")=='true':
+        if MySettings.mysettings.value("checkBox_4.isChecked")=='true':
             self.ui.checkBox_4.setChecked(True)                     
         else:
             self.ui.checkBox_4.setChecked(False)  
@@ -1618,30 +1626,30 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
             self.ui.pushButton_2.setDisabled(True)    
             self.ui.label.setDisabled(True)                                
 
-        self.ui.comboBox.setCurrentText(self.mysettings.value("comboBox.text"))          
+        self.ui.comboBox.setCurrentText(MySettings.mysettings.value("comboBox.text"))          
 
-        if self.ui.comboBox.currentText()=='IPsec/L2TP' and self.mysettings.value("checkBox_4.isChecked")=='true':                    
-            self.ui.lineEdit.setText(self.mysettings.value("lineEdit.text.l2tp"))
-            self.ui.lineEdit_2.setText(self.mysettings.value("lineEdit_2.text.l2tp"))
-            self.ui.editLog3.setText(self.mysettings.value("editLog3.text.l2tp"))
-            self.ui.editPass_2.setText(self.mysettings.value("editPass_2.text.l2tp"))
+        if self.ui.comboBox.currentText()=='IPsec/L2TP' and MySettings.mysettings.value("checkBox_4.isChecked")=='true':                    
+            self.ui.lineEdit.setText(MySettings.mysettings.value("lineEdit.text.l2tp"))
+            self.ui.lineEdit_2.setText(MySettings.mysettings.value("lineEdit_2.text.l2tp"))
+            self.ui.editLog3.setText(MySettings.mysettings.value("editLog3.text.l2tp"))
+            self.ui.editPass_2.setText(MySettings.mysettings.value("editPass_2.text.l2tp"))
             self.ui.pushButton_2.setDisabled(True)    
             self.ui.pushButton_2.setStyleSheet("background-color: rgb(240, 240, 240)") 
             self.ui.label.setDisabled(True)            
-        elif self.ui.comboBox.currentText()=='OpenVPN' and self.mysettings.value("checkBox_4.isChecked")=='true':    
+        elif self.ui.comboBox.currentText()=='OpenVPN' and MySettings.mysettings.value("checkBox_4.isChecked")=='true':    
             self.ui.lineEdit.setText('')
             self.ui.lineEdit_2.setText('')        
-            self.ui.editLog3.setText(self.mysettings.value("editLog3.text.openvpn"))
-            self.ui.editPass_2.setText(self.mysettings.value("editPass_2.text.openvpn"))   
+            self.ui.editLog3.setText(MySettings.mysettings.value("editLog3.text.openvpn"))
+            self.ui.editPass_2.setText(MySettings.mysettings.value("editPass_2.text.openvpn"))   
                         
 
     def showSettingsRDP(self):    
-        self.ui.comboBox_2.setCurrentText(self.mysettings.value("comboBox_2.text"))
+        self.ui.comboBox_2.setCurrentText(MySettings.mysettings.value("comboBox_2.text"))
 
         if self.ui.comboBox_2.currentText()=='Web':             
             self.ui.lineEdit_3.setDisabled(False)     
             self.ui.lineEdit_3.setStyleSheet("background-color: white")   
-            self.ui.lineEdit_3.setText(self.mysettings.value("lineEdit_3.text"))
+            self.ui.lineEdit_3.setText(MySettings.mysettings.value("lineEdit_3.text"))
             self.ui.editAdrRDP.setDisabled(True)
             self.ui.editAdrRDP.setText('')   
             self.ui.editAdrRDP.setStyleSheet("background-color: rgb(240, 240, 240)")
@@ -1661,16 +1669,16 @@ class FormSettings(QtWidgets.QWidget, FormSettingsD.Ui_Form):    #QtWidgets.QWid
             self.ui.lineEdit_3.setText('') 
             self.ui.lineEdit_3.setDisabled(True)   
             self.ui.label_6.setDisabled(True)
-            self.ui.editAdrRDP.setText(self.mysettings.value("editAdrRDP.text"))                         
+            self.ui.editAdrRDP.setText(MySettings.mysettings.value("editAdrRDP.text"))                         
             self.ui.editAdrRDP.setDisabled(False)  
             self.ui.labelAdrRDP.setDisabled(False)
-            self.ui.editLog2.setText(self.mysettings.value("editLog2.text"))  
+            self.ui.editLog2.setText(MySettings.mysettings.value("editLog2.text"))  
             self.ui.editLog2.setDisabled(False)  
             self.ui.labelLog2.setDisabled(False)      
-            self.ui.editPass2.setText(self.mysettings.value("editPass2.text"))  
+            self.ui.editPass2.setText(MySettings.mysettings.value("editPass2.text"))  
             self.ui.editPass2.setDisabled(False) 
             self.ui.labelPass2.setDisabled(False)
-            if self.mysettings.value("checkBox_5.isChecked")=='true':
+            if MySettings.mysettings.value("checkBox_5.isChecked")=='true':
                 self.ui.checkBox_5.setChecked(True)
             else:
                 self.ui.checkBox_5.setChecked(False)            
